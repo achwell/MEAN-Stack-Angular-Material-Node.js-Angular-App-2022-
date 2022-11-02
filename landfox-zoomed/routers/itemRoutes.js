@@ -37,21 +37,13 @@ router.post('/', uploads.single('image'), async (req, res) => {
     if (!category) {
         return res.status(400).send('Invalid Category');
     }
-
-    console.log(req)
-
     const file = req.file;
-
-    console.log(file)
-
     if (!file) {
         return res.status(400).send('No image in request :/')
     }
 
     const fileName = req.file.filename;
-    console.log(fileName)
     const path = `${req.protocol}://${req.get('host')}/public/images/`
-    console.log(path)
 
     let item = new Item({
         name: req.body.name,

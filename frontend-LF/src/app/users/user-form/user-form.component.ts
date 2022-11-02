@@ -44,7 +44,7 @@ export class UserFormComponent implements OnInit {
         this.editMode = true;
         this.userService.getOneUsers(this.currentUserId).subscribe(user => {
           this.userForm.get("email").setValue(user.email);
-          this.userForm.get("password").setValue(user.password);
+          this.userForm.get("password").setValue(user.passwordHash);
           this.userForm.get("isAdmin").setValue(user.isAdmin);
         })
       }
@@ -79,7 +79,7 @@ export class UserFormComponent implements OnInit {
     const user:User = {
       _id: this.currentUserId,
       email: this.userForm.get("email").value,
-      password: this.userForm.get("password").value,
+      passwordHash: this.userForm.get("password").value,
       isAdmin: !!this.userForm.get("isAdmin").value
     }
 

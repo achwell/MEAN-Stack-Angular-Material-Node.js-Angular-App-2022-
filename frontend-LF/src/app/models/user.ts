@@ -1,7 +1,7 @@
 export class User {
   _id!: string
   email!: string
-  password!: string;
+  passwordHash!: string;
   isAdmin!: boolean
   token?:string
 }
