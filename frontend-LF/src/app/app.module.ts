@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouterModule, Routes} from "@angular/router";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {MatCardModule} from "@angular/material/card";
@@ -23,11 +23,19 @@ import {CategoryDialogComponent} from './dialogs/category-dialog/category-dialog
 import {CategoryFormComponent} from './category/category-form/category-form.component';
 import {ItemsListComponent} from './items/items-list/items-list.component';
 import {SearchPipe} from "./Pipes/SearchPipe";
-import { ItemsListAdminComponent } from './items/items-list-admin/items-list-admin.component';
-import { ItemDialogComponent } from './dialogs/item-dialog/item-dialog.component';
-import { ItemFormComponent } from './items/item-form/item-form.component';
+import {ItemsListAdminComponent} from './items/items-list-admin/items-list-admin.component';
+import {ItemDialogComponent} from './dialogs/item-dialog/item-dialog.component';
+import {ItemFormComponent} from './items/item-form/item-form.component';
 import {TextFieldModule} from "@angular/cdk/text-field";
-import { SingleItemComponent } from './items/single-item/single-item.component';
+import {SingleItemComponent} from './items/single-item/single-item.component';
+import {LoginComponent} from './users/login/login.component';
+import {RegisterComponent} from './users/register/register.component';
+import {InterInterceptor} from "./services/inter.interceptor";
+import {GuardService} from "./services/guard.service";
+import { UsersListComponent } from './users/users-list/users-list.component';
+import { UserDialogComponent } from './dialogs/user-dialog/user-dialog.component';
+import { UserFormComponent } from './users/user-form/user-form.component';
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 
 const material = [
   MatButtonModule,
@@ -37,6 +45,7 @@ const material = [
   MatIconModule,
   MatInputModule,
   MatSelectModule,
+  MatSlideToggleModule,
   MatSnackBarModule,
   MatTableModule,
   TextFieldModule
@@ -49,11 +58,18 @@ const routes: Routes = [
       {path: "categories/list", component: CategoryListComponent},
       {path: "categories/form", component: CategoryFormComponent},
       {path: "categories/form/:id", component: CategoryFormComponent},
+
       {path: "", component: ItemsListComponent},
       {path: "items/list", component: ItemsListAdminComponent},
-      {path: "items/form", component: ItemFormComponent},
-      {path: "items/form/:id", component: ItemFormComponent},
-      {path: "items/single-item/:id", component: SingleItemComponent},
+      {path: "items/form", component: ItemFormComponent, canActivate: [GuardService]},
+      {path: "items/form/:id", component: ItemFormComponent, canActivate: [GuardService]},
+      {path: "items/single-item/:id", component: SingleItemComponent, canActivate: [GuardService]},
+
+      {path: "users/login", component: LoginComponent},
+      {path: "users/signup", component: RegisterComponent},
+      {path: "users/list", component: UsersListComponent},
+      {path: "users/form", component: UserFormComponent},
+      {path: "users/form/:id", component: UserFormComponent},
     ]
   }
 
@@ -73,7 +89,12 @@ const routes: Routes = [
     ItemsListAdminComponent,
     ItemDialogComponent,
     ItemFormComponent,
-    SingleItemComponent
+    SingleItemComponent,
+    LoginComponent,
+    RegisterComponent,
+    UsersListComponent,
+    UserDialogComponent,
+    UserFormComponent
   ],
   imports: [
     ...material,
@@ -84,7 +105,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [SearchPipe],
+  providers: [SearchPipe, {provide: HTTP_INTERCEPTORS, useClass: InterInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule {
