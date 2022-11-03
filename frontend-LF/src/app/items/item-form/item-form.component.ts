@@ -86,7 +86,7 @@ export class ItemFormComponent implements OnInit {
       this._snackBar.open("You added " + this.itemForm.get("name")?.value + " as new Item", "OK", {
         horizontalPosition: "right",
         verticalPosition: "top",
-        duration:4000
+        duration: 4000
       })
     })
   }
@@ -96,14 +96,14 @@ export class ItemFormComponent implements OnInit {
       this._snackBar.open("You updated " + this.itemForm.get("name")?.value, "OK", {
         horizontalPosition: "right",
         verticalPosition: "top",
-        duration:4000
+        duration: 4000
       })
     })
   }
 
   onSubmit() {
     this.isSubmitted = true;
-    if(this.itemForm.invalid) {
+    if (this.itemForm.invalid) {
       return;
     }
     const itemData = new FormData();
@@ -119,10 +119,9 @@ export class ItemFormComponent implements OnInit {
       this.addItem(itemData)
     }
 
-    this.itemService.getAllItems().subscribe(items => {
-      setTimeout(() => {
-        this.router.navigate(['/items/list'])
-      }, 2000)
-    })
+    this.itemService.getAllItems();
+    setTimeout(() => {
+      this.router.navigate(['/items/list'])
+    }, 2000)
   }
 }

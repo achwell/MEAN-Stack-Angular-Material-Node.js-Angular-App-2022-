@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Cart, CartItem} from "../models/cart";
 import {BehaviorSubject} from "rxjs";
 
-const CART = "cart";
+export const CART = "cart";
 
 @Injectable({
   providedIn: 'root'

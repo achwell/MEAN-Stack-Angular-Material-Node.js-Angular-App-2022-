@@ -3,17 +3,17 @@
     <div class="logo-position">
       <img src="assets/images/logo.png" height="200px" width="200px">
     </div>
-    <div class="animate_animated animate__slideInLeft">
+    <div class="cart-position">
       <img class="advance" src="assets/images/cart.png" height="150px" width="150px">
     </div>
     <div class="creds">
-      <a routerLink="/users/login">Login</a>
+      <a routerLink="/users/login" *ngIf="!getLoggedStatus()">Login</a>
     </div>
     <div>
-      <a routerLink="/users/signup">Register</a>
+      <a routerLink="/users/signup" *ngIf="!getLoggedStatus()">Register</a>
     </div>
     <div>
-      <a routerLink="/logout">Logout</a>
+      <a routerLink="/users/login" (click)="logout()" *ngIf="getLoggedStatus()">Logout</a>
     </div>
     <div class="icons">
       <button mat-icon-button color="primary" routerLink="/">
@@ -35,13 +35,13 @@
       <a routerLink="/">Items</a>
     </div>
     <div>
-      <a routerLink="/categories/list">Categories</a>
+      <a routerLink="/categories/list" *ngIf="userIsAdmin">Categories</a>
     </div>
     <div>
-      <a routerLink="/users/list">Users</a>
+      <a routerLink="/users/list" *ngIf="userIsAdmin">Users</a>
     </div>
     <div>
-      <a routerLink="/items/list">Manage Items</a>
+      <a routerLink="/items/list" *ngIf="userIsAdmin">Manage Items</a>
     </div>
 
   </div>

@@ -5,6 +5,10 @@ import {Router} from "@angular/router";
 import {map, Observable} from "rxjs";
 import {User} from "../models/user";
 
+export const USER = "user";
+
+export const USER_ADMIN = "userAdmin";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,8 +25,8 @@ export class UserService {
       password
     }).pipe(
       map(userInfo => {
-          localStorage.setItem("user", userInfo.user);
-          localStorage.setItem("userAdmin", userInfo.isAdmin ? JSON.stringify(userInfo.isAdmin) : JSON.stringify(false));
+          localStorage.setItem(USER, userInfo.user);
+          localStorage.setItem(USER_ADMIN, userInfo.isAdmin ? JSON.stringify(userInfo.isAdmin) : JSON.stringify(false));
           this.router.navigate(["/"]);
           return userInfo
         }
