@@ -36,6 +36,8 @@ import { UsersListComponent } from './users/users-list/users-list.component';
 import { UserDialogComponent } from './dialogs/user-dialog/user-dialog.component';
 import { UserFormComponent } from './users/user-form/user-form.component';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {MatBadgeModule} from "@angular/material/badge";
+import { CartComponent } from './cart/cart/cart.component';
 
 const material = [
   MatButtonModule,
@@ -70,6 +72,7 @@ const routes: Routes = [
       {path: "users/list", component: UsersListComponent},
       {path: "users/form", component: UserFormComponent},
       {path: "users/form/:id", component: UserFormComponent},
+      {path: "cart", component: CartComponent},
     ]
   }
 
@@ -94,7 +97,8 @@ const routes: Routes = [
     RegisterComponent,
     UsersListComponent,
     UserDialogComponent,
-    UserFormComponent
+    UserFormComponent,
+    CartComponent
   ],
   imports: [
     ...material,
@@ -103,7 +107,8 @@ const routes: Routes = [
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatBadgeModule
   ],
   providers: [SearchPipe, {provide: HTTP_INTERCEPTORS, useClass: InterInterceptor, multi: true}],
   bootstrap: [AppComponent]

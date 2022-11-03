@@ -5,7 +5,6 @@ import {ItemsService} from "../../services/items.service";
 import {CategoryService} from "../../services/category.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {SearchPipe} from "../../Pipes/SearchPipe";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-items-list',
@@ -25,8 +24,7 @@ export class ItemsListComponent implements OnInit {
   constructor(private itemService: ItemsService,
               private categoryService: CategoryService,
               private formBuilder: FormBuilder,
-              private searchPipe: SearchPipe,
-              private router: Router) {
+              private searchPipe: SearchPipe) {
   }
 
   ngOnInit(): void {
@@ -43,10 +41,6 @@ export class ItemsListComponent implements OnInit {
 
   getCategories() {
     this.categoryService.getCategories().subscribe(categories => this.categories = categories)
-  }
-
-  forwardToSingleItem(itemId: string) {
-    this.router.navigate(["/items/single-item/" + itemId])
   }
 
   changeClient(value: string) {

@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Item} from "../../models/item";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ItemsService} from "../../services/items.service";
+import {Cart, CartItem} from "../../models/cart";
+import {CartService} from "../../services/cart.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-single-item',
@@ -10,11 +13,14 @@ import {ItemsService} from "../../services/items.service";
 })
 export class SingleItemComponent implements OnInit {
 
-  item!:Item
+  item!: Item
 
   constructor(private route: ActivatedRoute,
               private itemService: ItemsService,
-              private router:Router) { }
+              private cartService: CartService,
+              private router: Router,
+              private _snackBar: MatSnackBar) {
+  }
 
   ngOnInit(): void {
     this.getOneItem();
@@ -34,6 +40,16 @@ export class SingleItemComponent implements OnInit {
   }
 
   addToCart(item: Item) {
-
+    const cartItem: CartItem = {
+      _id: this.item._id,
+      item: this.item,
+      quantity: 1
+    }
+    this.cartService.setCartItem(cartItem);
+    this._snackBar.open("You added " + cartItem.item.name + " to the cart", "OK", {
+      horizontalPosition: "right",
+      verticalPosition: "top",
+      duration: 4000
+    })
   }
 }
